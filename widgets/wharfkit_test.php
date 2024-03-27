@@ -96,9 +96,15 @@ class Widget_Streamer_Box extends Widget_Base
     protected function render()
     {
     ?>
-        <div class="cookiz-wharfkit-test">
+        <div class="cookiz-wharfkit-app">
             <h2>TEST IT WORKS</h2>
-            <button onclick="wharfkit_login()">Login button</button>
+            <div class="cookiz-wharfkit-vif" data-var="isLoggedIn" data-value="true">
+                <div class="cookiz-wharfkit-variable" data-var="actor_name"></div>
+                <button onclick="wharfkit_logout()">Logout</button>
+            </div>
+            <div class="cookiz-wharfkit-vif" data-var="isLoggedIn" data-value="false">
+                <button onclick="wharfkit_login()">Login button</button>
+            </div>
         </div>
     <?php
     }
