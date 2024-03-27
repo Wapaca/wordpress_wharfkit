@@ -100,6 +100,17 @@ class Widget_Streamer_Box extends Widget_Base
             <h2>TEST IT WORKS</h2>
             <div class="cookiz-wharfkit-vif" data-var="isLoggedIn" data-value="true">
                 <div class="cookiz-wharfkit-variable" data-var="actor_name"></div>
+                <button onclick="wharfkit_transact([{
+                        account: 'eosio.token',
+                        name: 'transfer',
+                        authorization: [wharfkit_data.session.permissionLevel],
+                        data: {
+                            from: wharfkit_data.actor_name,
+                            to: 'waxpaca.fx',
+                            quantity: '0.00000001 WAX',
+                            memo: 'made from wordpress'
+                        }
+                    }])">TEST transact</button>
                 <button onclick="wharfkit_logout()">Logout</button>
             </div>
             <div class="cookiz-wharfkit-vif" data-var="isLoggedIn" data-value="false">

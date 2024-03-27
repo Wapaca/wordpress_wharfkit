@@ -50,6 +50,7 @@ window.wharfkit_logout = async() => {
 
   window.wharfkit_render()
 }
+
 window.wharfkit_transact = async (actions) => {
   return await window.wharfkit_data.session.transact({ actions })
 }
