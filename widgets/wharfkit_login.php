@@ -4,13 +4,7 @@ if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly.
 }
 use Elementor\Widget_Base;
-use Elementor\Core\Schemes;
 use Elementor\Controls_Manager;
-use Elementor\Control_Media;
-use Elementor\Utils;
-use Elementor\Group_Control_Image_Size;
-use Elementor\Group_Control_Typography;
-use Elementor\Group_Control_Css_Filter;
 
 /**
  * Elementor image box widget.
@@ -19,7 +13,7 @@ use Elementor\Group_Control_Css_Filter;
  *
  * @since 1.0.0
  */
-class Widget_Streamer_Box extends Widget_Base
+class Widget_Wharftkit_Login extends Widget_Base
 {
     /**
      * Get widget name.
@@ -33,7 +27,7 @@ class Widget_Streamer_Box extends Widget_Base
      */
     public function get_name()
     {
-        return 'wharfkit-test';
+        return 'wharfkit-login';
     }
 
     /**
@@ -48,7 +42,7 @@ class Widget_Streamer_Box extends Widget_Base
      */
     public function get_title()
     {
-        return __('Cookiz Wharfkit test', 'elementor-test-extension');
+        return __('WAX - Wharfkit Login', 'elementor-wharfkit-login');
     }
 
     /**
@@ -78,12 +72,54 @@ class Widget_Streamer_Box extends Widget_Base
      */
     public function get_keywords()
     {
-        return ['cookiz', 'streamer'];
+        return ['wax', 'blockchain', 'web3', 'login'];
     }
 
     public function get_categories() {
-		return [ 'wptips-elementor' ];
+		return [ 'wax-wharfkit' ];
 	}
+
+    protected function register_controls() {
+
+        // Content Tab Start
+
+        $this->start_controls_section(
+            'chain_settings_section',
+            [
+                'label' => esc_html__( 'Chain settings', 'wax-wharfkit' ),
+                'tab' => Controls_Manager::TAB_CONTENT,
+            ]
+        );
+
+        $this->add_control(
+            'appname',
+            [
+                'label' => esc_html__( 'App Name', 'wax-wharfkit' ),
+                'type' => Controls_Manager::TEXT,
+                'default' => esc_html__( 'my wharfkit app', 'wax-wharfkit' ),
+            ]
+        );
+        $this->add_control(
+            'chain_id',
+            [
+                'label' => esc_html__( 'Chain ID', 'wax-wharfkit' ),
+                'type' => Controls_Manager::TEXT,
+                'default' => esc_html__( '1064487b3cd1a897ce03ae5b6a865651747e2e152090f99c1d19d44e01aea5a4', 'wax-wharfkit' ),
+            ]
+        );
+        $this->add_control(
+            'chain_url',
+            [
+                'label' => esc_html__( 'Chain URL', 'wax-wharfkit' ),
+                'type' => Controls_Manager::TEXT,
+                'default' => esc_html__( 'https://wax.greymass.com', 'wax-wharfkit' ),
+            ]
+        );
+
+        $this->end_controls_section();
+
+        // Content Tab End
+    }
 
     /**
      * Render image box widget output on the frontend.
@@ -95,8 +131,13 @@ class Widget_Streamer_Box extends Widget_Base
      */
     protected function render()
     {
+        $settings = $this->get_settings();
+
+        $appname = $settings['appname'];
+        $chain_id = $settings['chain_id'];
+        $chain_url = $settings['chain_url'];
     ?>
-        <div class="cookiz-wharfkit-app">
+        <div class="cookiz-wharfkit-app wharfkit-login" data-appname="<?= esc_attr( $appname ) ?>" data-chain-id="<?= esc_attr( $chain_id ) ?>" data-chain-url="<?= esc_attr( $chain_url ) ?>">
             <h2>TEST IT WORKS</h2>
             <div class="cookiz-wharfkit-vif" data-var="isLoggedIn" data-value="true">
                 <div class="cookiz-wharfkit-variable" data-var="actor_name"></div>
@@ -130,63 +171,14 @@ class Widget_Streamer_Box extends Widget_Base
 	 */
 	protected function _content_template() {
 		?>
-		<#
-		var html = '<div class="elementor-image-box-wrapper">';
-
-		if ( settings.image.url ) {
-			var image = {
-				id: settings.image.id,
-				url: settings.image.url,
-				size: settings.thumbnail_size,
-				dimension: settings.thumbnail_custom_dimension,
-				model: view.getEditModel()
-			};
-
-			var image_url = elementor.imagesManager.getImageUrl( image );
-
-			var imageHtml = '<img src="' + image_url + '" class="elementor-animation-' + settings.hover_animation + '" />';
-
-			if ( settings.link.url ) {
-				imageHtml = '<a href="' + settings.link.url + '">' + imageHtml + '</a>';
-			}
-
-			html += '<figure class="elementor-image-box-img">' + imageHtml + '</figure>';
-		}
-
-		var hasContent = !! ( settings.title_text || settings.description_text );
-
-		if ( hasContent ) {
-			html += '<div class="elementor-image-box-content">';
-
-			if ( settings.title_text ) {
-				var title_html = settings.title_text;
-
-				if ( settings.link.url ) {
-					title_html = '<a href="' + settings.link.url + '">' + title_html + '</a>';
-				}
-
-				view.addRenderAttribute( 'title_text', 'class', 'elementor-image-box-title' );
-
-				view.addInlineEditingAttributes( 'title_text', 'none' );
-
-				html += '<' + settings.title_size  + ' ' + view.getRenderAttributeString( 'title_text' ) + '>' + title_html + '</' + settings.title_size  + '>';
-			}
-
-			if ( settings.description_text ) {
-				view.addRenderAttribute( 'description_text', 'class', 'elementor-image-box-description' );
-
-				view.addInlineEditingAttributes( 'description_text' );
-
-				html += '<p ' + view.getRenderAttributeString( 'description_text' ) + '>' + settings.description_text + '</p>';
-			}
-
-			html += '</div>';
-		}
-
-		html += '</div>';
-
-		print( html );
-		#>
+		<div class="wharfkit-login-backoffice">
+            <div>Wax Wharfkit Login</div>
+            <ul>
+                <li>appName: {{{ settings.appname }}}</li>
+                <li>chain_id: {{{ settings.chain_id }}}</li>
+                <li>chain_url: {{{ settings.chain_url }}}</li>
+            </ul>
+        </div>
 		<?php
 	}
 }
