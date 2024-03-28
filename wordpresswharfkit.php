@@ -1,14 +1,14 @@
 <?php
 /**
- * Plugin Name: Test elementor
- * Description: This is a test plugin
+ * Plugin Name: Wordpress Wharfkit
+ * Description: Elementor addon implementing Wharfkit for Antelope blockchains
  * Plugin URI:  https://twitter.com/Wapaca
  * Version:     1.0.0
  * Author:      Waxpaca
  * Author URI:  https://twitter.com/Wapaca
- * Text Domain: elementatorplugin
+ * Text Domain: wordpresswharfkit
  */
-namespace Cookiz_Elementor;
+namespace WordpressWharfkit;
 
 if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly.
@@ -21,7 +21,7 @@ if (!defined('ABSPATH')) {
  *
  * @since 1.0.0
  */
-final class Cookiz_Elementor_extension
+final class WordpressWharfkit_extension
 {
 
     /**
@@ -41,7 +41,7 @@ final class Cookiz_Elementor_extension
      * @access private
      * @static
      *
-     * @var Cookiz_Elementor_extension The single instance of the class.
+     * @var WordpressWharfkit_extension The single instance of the class.
      */
     private static $_instance = null;
 
@@ -55,7 +55,7 @@ final class Cookiz_Elementor_extension
      * @access public
      * @static
      *
-     * @return Cookiz_Elementor_extension An instance of the class.
+     * @return WordpressWharfkit_extension An instance of the class.
      */
     public static function instance()
     {
@@ -165,9 +165,9 @@ final class Cookiz_Elementor_extension
     {
 
         $elements_manager->add_category(
-            'wax-wharfkit',
+            'wordpress-wharfkit',
             [
-                'title' => __('WAX - Wharfkit', 'wax-wharfkit'),
+                'title' => __('Wordpress Wharfkit', 'wordpress-wharfkit'),
                 'icon' => 'fa fa-plug',
             ]
         );
@@ -210,6 +210,6 @@ final class Cookiz_Elementor_extension
     }
 }
 
-add_action( 'wp_enqueue_scripts', array( 'Cookiz_Elementor\Cookiz_Elementor_extension', 'register_widget_scripts') );
-add_filter( 'wp_script_attributes', array('Cookiz_Elementor\Cookiz_Elementor_extension', 'set_scripts_type_attribute'), 10, 1 );
-Cookiz_Elementor_extension::instance();
+add_action( 'wp_enqueue_scripts', array( 'WordpressWharfkit\WordpressWharfkit_extension', 'register_widget_scripts') );
+add_filter( 'wp_script_attributes', array('WordpressWharfkit\WordpressWharfkit_extension', 'set_scripts_type_attribute'), 10, 1 );
+WordpressWharfkit_extension::instance();

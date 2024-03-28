@@ -56,11 +56,11 @@ window.wharfkit_transact = async (actions) => {
 }
 
 window.wharfkit_render = () => {
-  let wharfkit_apps = document.getElementsByClassName('cookiz-wharfkit-app');
+  let wharfkit_apps = document.getElementsByClassName('wordpress-wharfkit-app');
 
   for(const wharfkit_app of wharfkit_apps) {
     // Update variables
-    const var_divs = wharfkit_app.getElementsByClassName("cookiz-wharfkit-variable");
+    const var_divs = wharfkit_app.getElementsByClassName("wordpress-wharfkit-variable");
 
     for(const var_div of var_divs) {
       const var_name = var_div.getAttribute('data-var');
@@ -75,7 +75,7 @@ window.wharfkit_render = () => {
     }
 
     // Update conditional display
-    const vif_divs = wharfkit_app.getElementsByClassName("cookiz-wharfkit-vif");
+    const vif_divs = wharfkit_app.getElementsByClassName("wordpress-wharfkit-vif");
 
     for(const vif_div of vif_divs) {
       const var_name = vif_div.getAttribute('data-var')
