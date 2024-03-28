@@ -79,47 +79,6 @@ class Widget_Wharftkit_Login extends Widget_Base
 		return [ 'wordpress-wharfkit' ];
 	}
 
-    protected function register_controls() {
-
-        // Content Tab Start
-
-        $this->start_controls_section(
-            'chain_settings_section',
-            [
-                'label' => esc_html__( 'Chain settings', 'wordpress-wharfkit' ),
-                'tab' => Controls_Manager::TAB_CONTENT,
-            ]
-        );
-
-        $this->add_control(
-            'appname',
-            [
-                'label' => esc_html__( 'App Name', 'wordpress-wharfkit' ),
-                'type' => Controls_Manager::TEXT,
-                'default' => esc_html__( 'my wharfkit app', 'wordpress-wharfkit' ),
-            ]
-        );
-        $this->add_control(
-            'chain_id',
-            [
-                'label' => esc_html__( 'Chain ID', 'wordpress-wharfkit' ),
-                'type' => Controls_Manager::TEXT,
-                'default' => esc_html__( '1064487b3cd1a897ce03ae5b6a865651747e2e152090f99c1d19d44e01aea5a4', 'wordpress-wharfkit' ),
-            ]
-        );
-        $this->add_control(
-            'chain_url',
-            [
-                'label' => esc_html__( 'Chain URL', 'wordpress-wharfkit' ),
-                'type' => Controls_Manager::TEXT,
-                'default' => esc_html__( 'https://wax.greymass.com', 'wordpress-wharfkit' ),
-            ]
-        );
-
-        $this->end_controls_section();
-
-        // Content Tab End
-    }
 
     /**
      * Render image box widget output on the frontend.
@@ -131,14 +90,11 @@ class Widget_Wharftkit_Login extends Widget_Base
      */
     protected function render()
     {
-        $settings = $this->get_settings();
-
-        $appname = $settings['appname'];
-        $chain_id = $settings['chain_id'];
-        $chain_url = $settings['chain_url'];
+        $appname = get_option('wordpresswharfkit_appname');
+        $chain_id = get_option('wordpresswharfkit_chain_id');
+        $chain_url = get_option('wordpresswharfkit_chain_url');
     ?>
         <div class="wordpress-wharfkit-app wharfkit-login" data-appname="<?= esc_attr( $appname ) ?>" data-chain-id="<?= esc_attr( $chain_id ) ?>" data-chain-url="<?= esc_attr( $chain_url ) ?>">
-            <h2>TEST IT WORKS</h2>
             <div class="wordpress-wharfkit-vif" data-var="isLoggedIn" data-value="true">
                 <div class="wordpress-wharfkit-variable" data-var="actor_name"></div>
                 <button onclick="wharfkit_transact([{
@@ -170,13 +126,16 @@ class Widget_Wharftkit_Login extends Widget_Base
 	 * @access protected
 	 */
 	protected function _content_template() {
+        $appname = get_option('wordpresswharfkit_appname');
+        $chain_id = get_option('wordpresswharfkit_chain_id');
+        $chain_url = get_option('wordpresswharfkit_chain_url');
 		?>
 		<div class="wharfkit-login-backoffice">
             <div>Wordpress Wharfkit Login</div>
             <ul>
-                <li>appName: {{ settings.appname }}</li>
-                <li>chain_id: {{ settings.chain_id }}</li>
-                <li>chain_url: {{ settings.chain_url }}</li>
+                <li>appName: <?= esc_attr($appname) ?></li>
+                <li>chain_id: <?= esc_attr($chain_id) ?></li>
+                <li>chain_url: <?= esc_attr($chain_url) ?></li>
             </ul>
         </div>
 		<?php

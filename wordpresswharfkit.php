@@ -184,7 +184,7 @@ final class WordpressWharfkit_extension
     public static function wordpresswharfkit_activation() {
         // Set default values for options if they don't exist
         if ( ! get_option( 'wordpresswharfkit_appname' ) ) {
-            add_option( 'wordpresswharfkit_appname', 'Wordpress Wharfkit App Name' );
+            add_option( 'wordpresswharfkit_appname', 'Go into general settings to change App Name' );
         }
 
         if ( ! get_option( 'wordpresswharfkit_chain_id' ) ) {

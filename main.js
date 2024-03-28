@@ -1,21 +1,39 @@
 const { SessionKit, WebRenderer, WalletPluginCloudWallet, WalletPluginAnchor, WalletPluginWombat } = Wharfkit;
 
 const webRenderer = new WebRenderer()
-const sessionKit = new SessionKit({
-  appName: "testwharfkitwordpress",
-  chains: [
-    {
-      id: "1064487b3cd1a897ce03ae5b6a865651747e2e152090f99c1d19d44e01aea5a4",
-      url: "https://wax.greymass.com",
-    },
-  ],
-  ui: webRenderer,
-  walletPlugins: [
-    new WalletPluginCloudWallet(),
-    new WalletPluginAnchor(),
-    new WalletPluginWombat()
-  ],
-})
+let sessionKit = null
+
+function initSessionKit() {
+  const wharfkit_apps = document.getElementsByClassName('wordpress-wharfkit-app');
+
+  if(!wharfkit_apps.length)
+    return false;
+
+  let appname = wharfkit_apps[0].getAttribute('data-appname')
+  let chain_id = wharfkit_apps[0].getAttribute('data-chain-id')
+  let chain_url = wharfkit_apps[0].getAttribute('data-chain-url')
+
+  if([appname, chain_id, chain_url].includes(null))
+    return false;
+
+  sessionKit = new SessionKit({
+    appName: appname,
+    chains: [
+      {
+        id: chain_id,
+        url: chain_url,
+      },
+    ],
+    ui: webRenderer,
+    walletPlugins: [
+      new WalletPluginCloudWallet(),
+      new WalletPluginAnchor(),
+      new WalletPluginWombat()
+    ],
+  })
+
+  return true;
+}
 
 // Set a variable inside the window object
 window.wharfkit_data = {
@@ -55,6 +73,8 @@ window.wharfkit_transact = async (actions) => {
   return await window.wharfkit_data.session.transact({ actions })
 }
 
+
+// Mini rendering function, feel free to update the plugin at your convenience if you want to use a proper framework.
 window.wharfkit_render = () => {
   let wharfkit_apps = document.getElementsByClassName('wordpress-wharfkit-app');
 
@@ -104,6 +124,10 @@ window.wharfkit_render = () => {
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
+  if(!initSessionKit()) {
+    console.error('Wordpress Wharfkit: Impossible to init session kit');
+    return;
+  }
   await window.wharfkit_checkLogin()
   window.wharfkit_render()
 });
