@@ -249,10 +249,11 @@ final class WordpressWharfkit_extension
 
         // Include Widget files
         require_once __DIR__ . '/widgets/wharfkit_login.php';
+        require_once __DIR__ . '/widgets/wharfkit_transact.php';
 
         // Register widget
         \Elementor\Plugin::instance()->widgets_manager->register(new Widgets\Widget_Wharftkit_Login());
-
+        \Elementor\Plugin::instance()->widgets_manager->register(new Widgets\Widget_Wharftkit_Transact());
     }
 }
 

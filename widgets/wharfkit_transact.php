@@ -9,11 +9,11 @@ use Elementor\Controls_Manager;
 /**
  * Elementor image box widget.
  *
- * Elementor widget that displays wharfkit login button
+ * Elementor widget that displays transact button if user is logged in
  *
  * @since 1.0.0
  */
-class Widget_Wharftkit_Login extends Widget_Base
+class Widget_Wharftkit_Transact extends Widget_Base
 {
     /**
      * Get widget name.
@@ -27,7 +27,7 @@ class Widget_Wharftkit_Login extends Widget_Base
      */
     public function get_name()
     {
-        return 'wharfkit-login';
+        return 'wharfkit-transact';
     }
 
     /**
@@ -42,7 +42,7 @@ class Widget_Wharftkit_Login extends Widget_Base
      */
     public function get_title()
     {
-        return __('Wordpress Wharfkit Login', 'wordpress-wharfkit');
+        return __('Wordpress Wharfkit Transact', 'wordpress-wharfkit');
     }
 
     /**
@@ -72,12 +72,12 @@ class Widget_Wharftkit_Login extends Widget_Base
      */
     public function get_keywords()
     {
-        return ['wax', 'blockchain', 'web3', 'login', 'wharfkit'];
+        return ['wax', 'blockchain', 'web3', 'transact', 'wharfkit'];
     }
 
     public function get_categories() {
-		return [ 'wordpress-wharfkit' ];
-	}
+        return [ 'wordpress-wharfkit' ];
+    }
 
 
     /**
@@ -94,39 +94,45 @@ class Widget_Wharftkit_Login extends Widget_Base
         $chain_id = get_option('wordpresswharfkit_chain_id');
         $chain_url = get_option('wordpresswharfkit_chain_url');
     ?>
-        <div class="wordpress-wharfkit-app wharfkit-login" data-appname="<?= esc_attr( $appname ) ?>" data-chain-id="<?= esc_attr( $chain_id ) ?>" data-chain-url="<?= esc_attr( $chain_url ) ?>">
+        <div class="wordpress-wharfkit-app wharfkit-transact" data-appname="<?= esc_attr( $appname ) ?>" data-chain-id="<?= esc_attr( $chain_id ) ?>" data-chain-url="<?= esc_attr( $chain_url ) ?>">
             <div class="wordpress-wharfkit-vif" data-var="isLoggedIn" data-value="true">
-                <div class="wordpress-wharfkit-variable" data-var="actor_name"></div>
-                <button onclick="wharfkit_logout()">Logout</button>
-            </div>
-            <div class="wordpress-wharfkit-vif" data-var="isLoggedIn" data-value="false">
-                <button onclick="wharfkit_login()">Login button</button>
+                <button onclick="wharfkit_transact([{
+                        account: 'eosio.token',
+                        name: 'transfer',
+                        authorization: [wharfkit_data.session.permissionLevel],
+                        data: {
+                            from: wharfkit_data.actor_name,
+                            to: 'waxpaca.fx',
+                            quantity: '0.00000001 WAX',
+                            memo: 'made from wordpress'
+                        }
+                    }])">TEST transact</button>
             </div>
         </div>
     <?php
     }
 
     /**
-	 * Render image box widget output in the editor.
-	 *
-	 * Written as a Backbone JavaScript template and used to generate the live preview.
-	 *
-	 * @since 1.0.0
-	 * @access protected
-	 */
-	protected function _content_template() {
+     * Render image box widget output in the editor.
+     *
+     * Written as a Backbone JavaScript template and used to generate the live preview.
+     *
+     * @since 1.0.0
+     * @access protected
+     */
+    protected function _content_template() {
         $appname = get_option('wordpresswharfkit_appname');
         $chain_id = get_option('wordpresswharfkit_chain_id');
         $chain_url = get_option('wordpresswharfkit_chain_url');
-		?>
-		<div class="wharfkit-login-backoffice">
-            <div>Wordpress Wharfkit Login</div>
+        ?>
+        <div class="wharfkit-transact-backoffice">
+            <div>Wordpress Wharfkit Transact</div>
             <ul>
                 <li>appName: <?= esc_attr($appname) ?></li>
                 <li>chain_id: <?= esc_attr($chain_id) ?></li>
                 <li>chain_url: <?= esc_attr($chain_url) ?></li>
             </ul>
         </div>
-		<?php
-	}
+        <?php
+    }
 }
