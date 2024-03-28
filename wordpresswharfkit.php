@@ -173,6 +173,52 @@ final class WordpressWharfkit_extension
         );
     }
 
+    public static function register_settings() {
+        add_settings_section( 'wordpresswharfkit_settings', 'Wordpress Wharfkit', array('WordpressWharfkit\WordpressWharfkit_extension', 'wordpresswharfkit_settings_section_callback'), 'general' );
+        register_setting( 'general', 'wordpresswharfkit_appname' );
+        register_setting( 'general', 'wordpresswharfkit_chain_id' );
+        register_setting( 'general', 'wordpresswharfkit_chain_url' );
+    }
+
+    // Activation hook for your plugin
+    public static function wordpresswharfkit_activation() {
+        // Set default values for options if they don't exist
+        if ( ! get_option( 'wordpresswharfkit_appname' ) ) {
+            add_option( 'wordpresswharfkit_appname', 'Wordpress Wharfkit App Name' );
+        }
+
+        if ( ! get_option( 'wordpresswharfkit_chain_id' ) ) {
+            add_option( 'wordpresswharfkit_chain_id', '1064487b3cd1a897ce03ae5b6a865651747e2e152090f99c1d19d44e01aea5a4' );
+        }
+
+        if ( ! get_option( 'wordpresswharfkit_chain_url' ) ) {
+            add_option( 'wordpresswharfkit_chain_url', 'https://wax.eosphere.io' );
+        }
+    }
+
+    public static function settings_fields() {
+        add_settings_field( 'wordpresswharfkit_appname', 'App Name', array('WordpressWharfkit\WordpressWharfkit_extension', 'appname_callback'), 'general', 'wordpresswharfkit_settings' );
+        add_settings_field( 'wordpresswharfkit_chain_id', 'Chain id', array('WordpressWharfkit\WordpressWharfkit_extension', 'chain_id_callback'), 'general', 'wordpresswharfkit_settings' );
+        add_settings_field( 'wordpresswharfkit_chain_url', 'Chain URL', array('WordpressWharfkit\WordpressWharfkit_extension', 'chain_url_callback'), 'general', 'wordpresswharfkit_settings' );
+    }
+
+    public static function wordpresswharfkit_settings_section_callback() {
+        return;
+    }
+
+    // Callback functions for settings fields
+    public static function appname_callback() {
+        echo '<input type="text" name="wordpresswharfkit_appname" class="regular-text code" value="' . esc_attr( get_option('wordpresswharfkit_appname') ) . '" />';
+    }
+
+    public static function chain_id_callback() {
+        echo '<input type="text" name="wordpresswharfkit_chain_id" class="regular-text code" value="' . esc_attr( get_option('wordpresswharfkit_chain_id') ) . '" />';
+    }
+
+    public static function chain_url_callback() {
+        echo '<input type="text" name="wordpresswharfkit_chain_url" class="regular-text code" value="' . esc_attr( get_option('wordpresswharfkit_chain_url') ) . '" />';
+    }
+
     public static function register_widget_scripts() {
         wp_register_script( 'wharfkit', plugins_url( 'lib/wharfkit.js', __FILE__ ));
         wp_register_script( 'main', plugins_url( 'main.js', __FILE__ ), ['wharfkit']);
@@ -210,6 +256,9 @@ final class WordpressWharfkit_extension
     }
 }
 
+register_activation_hook( __FILE__, array('WordpressWharfkit\WordpressWharfkit_extension', 'wordpresswharfkit_activation') );
+add_action( 'admin_init', array('WordpressWharfkit\WordpressWharfkit_extension', 'register_settings') );
+add_action( 'admin_init', array('WordpressWharfkit\WordpressWharfkit_extension', 'settings_fields') );
 add_action( 'wp_enqueue_scripts', array( 'WordpressWharfkit\WordpressWharfkit_extension', 'register_widget_scripts') );
 add_filter( 'wp_script_attributes', array('WordpressWharfkit\WordpressWharfkit_extension', 'set_scripts_type_attribute'), 10, 1 );
 WordpressWharfkit_extension::instance();
