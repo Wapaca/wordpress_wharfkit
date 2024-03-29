@@ -20,7 +20,7 @@ class Widget_Wharftkit_Login extends Widget_Base
 
     public function get_icon()
     {
-        return 'eicon-image-box';
+        return 'eicon-person';
     }
 
     public function get_keywords()

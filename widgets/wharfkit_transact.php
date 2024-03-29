@@ -20,7 +20,7 @@ class Widget_Wharftkit_Transact extends Widget_Base
 
     public function get_icon()
     {
-        return 'eicon-image-box';
+        return 'eicon-flash';
     }
 
     public function get_keywords()
