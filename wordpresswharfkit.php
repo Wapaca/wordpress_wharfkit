@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Wordpress Wharfkit
  * Description: Elementor addon implementing Wharfkit for Antelope blockchains
- * Plugin URI:  https://twitter.com/Wapaca
+ * Plugin URI:  https://github.com/Wapaca/wordpress_wharfkit
  * Version:     1.0.0
  * Author:      Waxpaca
  * Author URI:  https://twitter.com/Wapaca
